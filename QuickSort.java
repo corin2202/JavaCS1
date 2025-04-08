@@ -23,7 +23,8 @@ public class QuickSort{
         populateArrayList(day7,500000);
 
 
-        calcAvgExecutionTime(day1,100);
+        
+        calcAvgExecutionTime(day7,100);
     
     }
 
@@ -112,6 +113,7 @@ public class QuickSort{
     }
 
     static int partition(ArrayList<Integer> arr, int left, int right){
+        
         int midIndex = (right+left)/2;
         
         // sort them
@@ -136,16 +138,12 @@ public class QuickSort{
 
         for (int j = left+1; j <= right; j++){
             if (arr.get(j) < pivotE){
-                int temp = arr.get(i);
-                arr.set(i, arr.get(j));
-                arr.set(j,temp);
+                swap(arr,i,j);
                 i++;
             }
         }
 
-        int temp = arr.get(i - 1);
-        arr.set(i - 1, arr.get(left));
-        arr.set(left, temp);
+        swap(arr, i-1, left);
 
         return i - 1;
         
