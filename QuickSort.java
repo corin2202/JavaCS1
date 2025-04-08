@@ -1,0 +1,141 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+
+
+
+public class QuickSort{
+    public static void main(String[] args){
+        ArrayList<Integer> day1 = new ArrayList<Integer>();
+        ArrayList<Integer> day2 = new ArrayList<Integer>();
+        ArrayList<Integer> day3 = new ArrayList<Integer>();
+        ArrayList<Integer> day4 = new ArrayList<Integer>();
+        ArrayList<Integer> day5 = new ArrayList<Integer>();
+        ArrayList<Integer> day6 = new ArrayList<Integer>();
+        ArrayList<Integer> day7 = new ArrayList<Integer>();
+
+        populateArrayList(day1,1000);
+        populateArrayList(day2, 5000);
+        populateArrayList(day3, 10000);
+        populateArrayList(day4, 50000);
+        populateArrayList(day5, 75000);
+        populateArrayList(day6, 100000);
+        populateArrayList(day7,500000);
+
+        
+        
+
+        calcAvgExecutionTime(day7,100);
+        System.out.println();
+
+
+
+
+    }
+
+    public static long calcTimeDiff(ArrayList<Integer> arr){
+        ArrayList<Integer> arr2 = new ArrayList<>(arr);
+        long startTime = System.currentTimeMillis();
+        quickSort(arr2, 0, arr2.size()-1);
+        long endTime = System.currentTimeMillis();
+        return endTime-startTime;
+
+    }
+
+    public static void calcAvgExecutionTime(ArrayList<Integer> arr, int iterations){
+        ArrayList<Integer> sorted = new ArrayList<Integer>();
+        ArrayList<Integer> reverseSorted = new ArrayList<Integer>();
+        long totalTimeRandom = 0;
+        long totalTimeSorted = 0;
+        long totalTimeReversed = 0;
+        
+
+        for (Integer num: arr){
+            sorted.add(num);
+        }
+
+        quickSort(sorted,0,sorted.size()-1);
+
+        for (int j = sorted.size()-1; j > -1; j--){
+            reverseSorted.add(sorted.get(j));
+        }
+
+        
+        for (int i = 0; i < iterations; i++){
+            totalTimeRandom += calcTimeDiff(arr);            
+            totalTimeSorted += calcTimeDiff(sorted);
+            totalTimeReversed += calcTimeDiff(reverseSorted);
+
+        }
+
+        System.out.printf("Average time across %d iterations on a random list: %.2f ms",iterations,(double)totalTimeRandom/iterations);
+        System.out.println();
+        //System.out.printf("Average time across %d iterations on a pre sorted list: %.2f ms",iterations,(double)totalTimeSorted/iterations);
+        //System.out.println();
+        //System.out.printf("Average time across %d iterations on a reverse sorted list: %.2f ms",iterations,(double)totalTimeReversed/iterations);
+        //System.out.println();
+        System.out.printf("The first 5 items are: ");
+        for (int i = 0; i < 5; i++){
+            System.out.printf("%d, ",sorted.get(i));
+        }
+        System.out.println();
+        System.out.printf("The last 5 items are: ");
+        for (int i = sorted.size()-6; i < sorted.size()-1; i++){
+            System.out.printf("%d, ",sorted.get(i));
+        }
+
+
+        
+
+        
+       
+
+    }
+
+    
+
+
+    public static void populateArrayList(ArrayList<Integer> arr, int size){
+
+        Random rand = new Random();
+        for (int i = 1; i< size + 1; i++){
+            arr.add(rand.nextInt(1000,500000));
+
+        }
+
+    }
+
+    static int partition(ArrayList<Integer> arr, int left, int right){
+        int pivotE = arr.get(left);
+        int i = left + 1;
+
+
+        for (int j = left+1; j <= right; j++){
+            if (arr.get(j) < pivotE){
+                int temp = arr.get(i);
+                arr.set(i, arr.get(j));
+                arr.set(j,temp);
+                i++;
+            }
+        }
+
+        int temp = arr.get(i - 1);
+        arr.set(i - 1, arr.get(left));
+        arr.set(left, temp);
+
+        return i - 1;
+        
+    }
+
+    public static void quickSort(ArrayList<Integer> arr, int left, int right){
+        if (left<right){
+            int pivotI = partition(arr,left,right);
+            quickSort(arr,left,pivotI-1);
+            quickSort(arr,pivotI+1, right);
+        } else {
+            return;
+        }
+    }
+
+
+}
