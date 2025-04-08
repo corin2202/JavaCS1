@@ -23,7 +23,12 @@ public class QuickSort{
         populateArrayList(day7,500000);
 
 
-        
+        calcAvgExecutionTime(day1,100);
+        calcAvgExecutionTime(day2,100);
+        calcAvgExecutionTime(day3,100);
+        calcAvgExecutionTime(day4,100);
+        calcAvgExecutionTime(day5,100);
+        calcAvgExecutionTime(day6,100);
         calcAvgExecutionTime(day7,100);
     
     }
@@ -74,6 +79,7 @@ public class QuickSort{
         double avgTime = (avgRand + avgSorted + avgPresorted)/3;
 
 
+        System.out.println();
         System.out.printf("Average time across %d iterations on a random list: %.2f ms",iterations,avgRand);
         System.out.println();
         System.out.printf("Average time across %d iterations on a pre sorted list: %.2f ms",iterations,avgSorted);
@@ -150,6 +156,11 @@ public class QuickSort{
     }
 
     public static void quickSort(ArrayList<Integer> arr, int left, int right){
+        if (right - left < 11){
+            selectionSort(arr, left, right);
+            return;
+        }
+
         if (left<right){
             int pivotI = partition(arr,left,right);
             quickSort(arr,left,pivotI-1);
@@ -158,6 +169,23 @@ public class QuickSort{
             return;
         }
     }
+
+    public static void selectionSort(ArrayList<Integer> arr, int left, int right){
+        for (int i = left; i < right + 1; i++){
+            int min = i;
+            for (int j = i + 1; j < right + 1; j++){
+                if (arr.get(j) < arr.get(min)){
+                    min = j;
+                }
+            }
+
+            // swap min and i
+            swap(arr,min,i);
+
+        }
+
+    }
+
 
 
 }
