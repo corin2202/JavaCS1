@@ -22,15 +22,9 @@ public class QuickSort{
         populateArrayList(day6, 100000);
         populateArrayList(day7,500000);
 
-        
-        
 
-        calcAvgExecutionTime(day7,100);
-        System.out.println();
-
-
-
-
+        calcAvgExecutionTime(day1,100);
+    
     }
 
     public static long calcTimeDiff(ArrayList<Integer> arr){
@@ -39,7 +33,6 @@ public class QuickSort{
         quickSort(arr2, 0, arr2.size()-1);
         long endTime = System.currentTimeMillis();
         return endTime-startTime;
-
     }
 
     public static void calcAvgExecutionTime(ArrayList<Integer> arr, int iterations){
@@ -68,12 +61,26 @@ public class QuickSort{
 
         }
 
-        System.out.printf("Average time across %d iterations on a random list: %.2f ms",iterations,(double)totalTimeRandom/iterations);
+        printTimes(sorted, totalTimeRandom, totalTimeSorted, totalTimeReversed, iterations);
+        
+    }
+
+
+    public static void printTimes(ArrayList<Integer> sorted, long randTime, long sortedTime, long presortTime, int iterations){
+        double avgRand = (double)randTime/iterations;
+        double avgSorted = (double)sortedTime/iterations;
+        double avgPresorted = (double)presortTime/iterations;
+        double avgTime = (avgRand + avgSorted + avgPresorted)/3;
+
+
+        System.out.printf("Average time across %d iterations on a random list: %.2f ms",iterations,avgRand);
         System.out.println();
-        //System.out.printf("Average time across %d iterations on a pre sorted list: %.2f ms",iterations,(double)totalTimeSorted/iterations);
-        //System.out.println();
-        //System.out.printf("Average time across %d iterations on a reverse sorted list: %.2f ms",iterations,(double)totalTimeReversed/iterations);
-        //System.out.println();
+        System.out.printf("Average time across %d iterations on a pre sorted list: %.2f ms",iterations,avgSorted);
+        System.out.println();
+        System.out.printf("Average time across %d iterations on a reverse sorted list: %.2f ms",iterations,avgPresorted);
+        System.out.println();
+        System.out.printf("The average time is %.2f ms", avgTime);
+        System.out.println();
         System.out.printf("The first 5 items are: ");
         for (int i = 0; i < 5; i++){
             System.out.printf("%d, ",sorted.get(i));
@@ -83,13 +90,6 @@ public class QuickSort{
         for (int i = sorted.size()-6; i < sorted.size()-1; i++){
             System.out.printf("%d, ",sorted.get(i));
         }
-
-
-        
-
-        
-       
-
     }
 
     
@@ -105,7 +105,31 @@ public class QuickSort{
 
     }
 
+    static void swap(ArrayList<Integer> arr, int index1, int index2){
+        int temp = arr.get(index1);
+        arr.set(index1, arr.get(index2));
+        arr.set(index2, temp);
+    }
+
     static int partition(ArrayList<Integer> arr, int left, int right){
+        int midIndex = (right+left)/2;
+        
+        // sort them
+        if (arr.get(left) > arr.get(midIndex)){
+            swap(arr,left, midIndex);
+        }
+
+        if (arr.get(left) > arr.get(right)){
+            swap(arr,left,right);
+        }
+
+        if (arr.get(midIndex) > arr.get(right)){
+            swap(arr,midIndex,right);
+        }
+
+        // median is now the left
+        swap(arr,left,midIndex);
+        
         int pivotE = arr.get(left);
         int i = left + 1;
 
