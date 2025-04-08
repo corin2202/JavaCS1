@@ -150,12 +150,32 @@ public class QuickSort{
     }
 
     public static void quickSort(ArrayList<Integer> arr, int left, int right){
+        if (right - left < 11){
+            insertionSort(arr, left, right);
+            return;
+        }
+
         if (left<right){
             int pivotI = partition(arr,left,right);
             quickSort(arr,left,pivotI-1);
             quickSort(arr,pivotI+1, right);
         } else {
             return;
+        }
+    }
+
+
+    public static void insertionSort(ArrayList<Integer> arr, int left, int right){
+        for (int i = left + 1; i< right+1; i++){
+            int temp = arr.get(i);
+            int j = i -1;
+
+            while (j >= left && arr.get(j) > temp){
+                arr.set(j+1,arr.get(j));
+                j--;
+            }
+
+            arr.set(j+1, temp);
         }
     }
 
