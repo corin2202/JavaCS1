@@ -23,8 +23,13 @@ public class QuickSort{
         populateArrayList(day7,500000);
 
 
-        
-        calcAvgExecutionTime(day7,100);
+        calcAvgExecutionTime(day1,100);
+        calcAvgExecutionTime(day2,100);
+        calcAvgExecutionTime(day3,100);
+        calcAvgExecutionTime(day4,100);
+        calcAvgExecutionTime(day5,100);
+        calcAvgExecutionTime(day6,10);
+        calcAvgExecutionTime(day7,10);
     
     }
 
@@ -150,7 +155,7 @@ public class QuickSort{
     }
 
     public static void quickSort(ArrayList<Integer> arr, int left, int right){
-        if (right - left < 11){
+        if (right - left < arr.size()*0.005){
             insertionSort(arr, left, right);
             return;
         }
